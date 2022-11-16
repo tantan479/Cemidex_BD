@@ -1,0 +1,412 @@
+@model Falecido;
+@using Microsoft.AspNetCore.Mvc;
+@using Cemidex_BD.Data;
+@using Cemidex_BD.Models;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@{
+    IEnumerable<Falecido> falecidos = ViewBag.Falecidos;
+
+    var sepultamento = ViewBag.Sepultamento;
+    var sepultamento1 = sepultamento.IDJazigo;
+    var sepultamento2 = sepultamento.IDRequerente;
+
+    List<Sepultamento> listsepultamento = ViewBag.Sepultamentos;  
+    List<Requerente> listrequerente = ViewBag.dbrequerentes;
+}
+
+<center>
+
+    <div class="container controls min-vh ctcontainer" style="overflow-x: auto;">
+        <h1> Relatório de Falecidos</h1><br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+            style="justify-content: center; display: inline-block;">
+            Cadastrar Falecido
+        </button>
+        <br>
+        <br>
+        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="border-radius: 10px;">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="border-radius: 10px;">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-body">
+                        <main role="main">
+                            <div>
+                                <center>
+                                    <h1>Cadastrar Novo Falecido</h1>
+                                    <div>
+                <form method="POST" id="cadastrar">
+                    <div class="controls">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.Nome"></label>
+                                <input class="form-control" placeholder="Insira o nome do falecido"
+                                    required="required" data-error="Insira um nome válido."
+                                    asp-for="@Model.Nome">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">                            
+                                <label asp-for="@sepultamento1">Jazigo:</label>
+                                <select class="form-select" asp-for="@sepultamento1"
+                                asp-items="@ViewBag.jazigos" placeholder="Jazigo">
+                                <option value="">Selecione um Jazigo...</option>
+                                </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-lg-6">                            
+                                <label asp-for="@sepultamento2">Requerente:</label>
+                                <select class="form-select" asp-for="@sepultamento2"
+                                asp-items="@ViewBag.requerentes" placeholder="Requerente">
+                                <option value="">Selecione um Requerente...</option>
+                                </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.NomeMae"></label>
+                                <input class="form-control" placeholder="Insira o nome da mãe"
+                                    required="required" data-error="Insira um nome válido"
+                                    asp-for="@Model.NomeMae">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.NomePai"></label>
+                                <input class="form-control"
+                                    placeholder="Insira o nome do Pai"
+                                    required="required" data-error="Insira um nome válido."
+                                    asp-for="@Model.NomePai">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.DataObito"></label>
+                                <input type="datetime-local" class="form-control"
+                                    placeholder="Anexe a certidao de obito de óbito" required="required"
+                                    data-error="Insira uma certidão válido." asp-for="@Model.DataObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.TempoEnterro"></label>
+                                <input type="datetime-local" class="form-control"
+                                    placeholder="Insira a data do enterro" required="required"
+                                    data-error="Insira uma data válida." asp-for="@Model.TempoEnterro">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.Sexo"></label>
+                                <select class="form-select" asp-for="@Model.Sexo"
+                                 placeholder="Sexo">
+                                    <option value="">Selecione seu sexo...</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.EstadoCivil">Estado Civil:</label>
+                                <select class="form-select" asp-for="@Model.EstadoCivil"
+                                 placeholder="Estado Civil">
+                                    <option value="">Selecione um Estado Civil...</option>
+                                    <option value="Solteiro">Solteiro</option>
+                                    <option value="Casado">Casado</option>
+                                    <option value="Viúvo">Viúvo</option>
+                                    <option value="Divorciado">Divorciado</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.RegistroObito"></label>
+                                <input type="text" class="form-control"
+                                    placeholder="Insiro o registro de óbito" required="required"
+                                    data-error="Insira um registro válido." asp-for="@Model.RegistroObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.CertidaoObito"></label>
+                                <input type="text" class="form-control"
+                                    placeholder="Anexe a certidao de obito de óbito" required="required"
+                                    data-error="Insira uma certidão válido." asp-for="@Model.CertidaoObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.DataObito"></label>
+                                <input type="datetime-local" class="form-control"
+                                    placeholder="Anexe a certidao de obito de óbito" required="required"
+                                    data-error="Insira uma certidão válido." asp-for="@Model.DataObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        
+                        <a asp-controller="Falecido" asp-action="Index"
+                            class="btn btn-secondary">Cancelar</a>
+                        <br><br>
+                    </div>
+                    <button id="adquirir" form="cadastrar" type="submit"
+                        class="btn btn-primary frase">Salvar</button>
+                </form>
+                                    </div>
+                                </center>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table" style="overflow-x: auto;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Nome da Mãe</th>
+                    <th scope="col">Nome do Pai</th>
+                    <th scope="col">Idade da morte</th>
+                    <th scope="col">Data do Enterro</th>
+                    <th scope="col">Sexo</th>
+                    <th scope="col">Estado Civil</th>
+                    <th scope="col">Registro de Óbito</th>
+                    <th scope="col">Certidão de Óbito</th>
+                    <th scope="col">Requerente</th>
+                    <th scope="col">Jazigo</th>
+                    <th scope="col">Data de Óbito</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (falecidos != null)
+                {
+
+                    var i=0;
+
+                    @foreach (var falecido in falecidos)
+                    {
+                        
+                        
+                        var selectSepultado = listsepultamento.Find(s => s.IDFalecido == falecido.IDFalecido);
+
+                        var idjazigo = selectSepultado.IDJazigo;
+
+
+                        var requerenteselect = listrequerente.Find(r => r.IdRequerente == selectSepultado.IDRequerente);
+                        var nomerequerente = requerenteselect.Nome;
+                        
+                        i++;
+
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@falecido.Nome</td>
+                            <td>@falecido.NomeMae</td>
+                            <td>@falecido.NomePai</td>
+                            <td>@falecido.DataNascimento</td>
+                            <td>@falecido.TempoEnterro</td>
+                            <td>@falecido.Sexo</td>
+                            <td>@falecido.EstadoCivil</td>
+                            <td>@falecido.RegistroObito</td>
+                            <td>@falecido.CertidaoObito</td>
+                            <td>@nomerequerente</td>
+                            <td>@idjazigo</td>
+                            <td>@falecido.DataObito</td>
+                            
+                            <td>
+                                <button type="submit" class="btn btn-primary" data-toggle="modal"
+                            data-target='@($"#b{falecido.IDFalecido}")'>Editar</button>
+                            </td>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" asp-for="@falecido.IDFalecido">
+                                     <button type="button" class="btn btn-danger" data-toggle="modal"
+                            data-target='#_Deletar'>Excluir</button>
+                                @await Html.PartialAsync("_Deletar")
+                                </form>
+                           
+                            </td>
+                            <div class="modal fade bd-example-modal-lg" id='@($"b{falecido.IDFalecido}")' tabindex="-1"
+                        role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+                        style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Editar</h1>
+                                                        <h2>Edição de <I>@falecido.Nome</I></h2>
+                                                        <hr>
+                <form method="POST" asp-action="Editar">
+                    <div class="controls">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.Nome"></label>
+                                <span asp-validation-for="@Model.Nome"></span>
+                                <input class="form-control" value="@falecido.Nome"
+                            placeholder="Insira o nome" required="required"
+                            data-error="Insira um nome válido."
+                            asp-for="@falecido.Nome">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">                            
+                                <label asp-for="@sepultamento1">Jazigo:</label>
+                                <select class="form-select" asp-for="@sepultamento1"
+                                asp-items="@ViewBag.jazigos" placeholder="Jazigo">
+                                <option value=@selectSepultado.IDJazigo>Selecione um Jazigo...</option>
+                                </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-lg-6">                            
+                                <label asp-for="@sepultamento2">Requerente:</label>
+                                <select class="form-select" asp-for="@sepultamento2"
+                                asp-items="@ViewBag.requerentes"
+                                placeholder="Requerente">
+                                <option value="@nomerequerente.ToString()">Selecione o requerente...</option>
+                                </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.NomeMae"></label>
+                                <span asp-validation-for="@Model.NomeMae"></span>
+                                <input class="form-control" value="@falecido.NomeMae"
+                            placeholder="Insira o nome da mãe" required="required"
+                            data-error="Insira um nome válido."
+                            asp-for="@falecido.NomeMae">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.NomePai"></label>
+                                <span asp-validation-for="@Model.NomePai"></span>
+                                <input class="form-control" value="@falecido.NomePai"
+                            placeholder="Insira o nome do pai" required="required"
+                            data-error="Insira um nome válido."
+                            asp-for="@falecido.NomePai">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.DataNascimento"></label>
+                                <span asp-validation-for="@Model.DataNascimento"></span>
+                                <input class="form-control" value="@falecido.DataNascimento"
+                            placeholder="Insira uma idade" required="required"
+                            data-error="Insira uma idade válida."
+                            asp-for="@falecido.DataNascimento">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.TempoEnterro"></label>
+                                <span asp-validation-for="@Model.TempoEnterro"></span>
+                                <input class="form-control" value="@falecido.TempoEnterro"
+                            placeholder="Insira uma data" required="required"
+                            data-error="Insira uma data válida."
+                            asp-for="@falecido.TempoEnterro">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.Sexo"></label>
+                                <span asp-validation-for="@Model.Sexo"></span>
+                                <label asp-for="@falecido.Sexo"></label>
+                                <select class="form-select" asp-for="@falecido.Sexo"
+                                 placeholder="Sexo">
+                                    <option value="">Selecione seu sexo...</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.EstadoCivil"></label>
+                                <span asp-validation-for="@Model.EstadoCivil"></span>
+                                <input class="form-control" value="@falecido.EstadoCivil"
+                            placeholder="Insira um estado Civil" required="required"
+                            data-error="Insira um estado válido."
+                            asp-for="@falecido.EstadoCivil">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.RegistroObito"></label>
+                                <span asp-validation-for="@Model.RegistroObito"></span>
+                                <input class="form-control" value="@falecido.RegistroObito"
+                            placeholder="Insira um registro de obito" required="required"
+                            data-error="Insira um registro válido."
+                            asp-for="@falecido.RegistroObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.CertidaoObito"></label>
+                                <span asp-validation-for="@Model.CertidaoObito"></span>
+                                <input class="form-control" value="@falecido.CertidaoObito"
+                            placeholder="Insira uma certidão de obito" required="required"
+                            data-error="Insira uma certidão válido."
+                            asp-for="@falecido.CertidaoObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.DataObito"></label>
+                                <span asp-validation-for="@Model.DataObito"></span>
+                                <input class="form-control" value="@falecido.DataObito"
+                            placeholder="Insira uma data de obito" required="required"
+                            data-error="Insira uma data válida."
+                            asp-for="@falecido.DataObito">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <a asp-controller="Falecido" asp-action="Index"
+                    class="btn btn-secondary">Cancelar</a>
+
+                        <br><br>
+                    </div>
+                    <input type="hidden" asp-for="@falecido.IDFalecido">
+                    <button id="adquirir" type="submit"
+                class="btn btn-primary frase">Confirmar</button>
+                </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</center>
+
+
+
+
+

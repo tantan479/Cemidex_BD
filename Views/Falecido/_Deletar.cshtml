@@ -1,0 +1,22 @@
+@model Falecido;
+<div class="modal fade bd-example-modal-lg" id='@($"a{Model.IDFalecido}")' tabindex="-1" role="dialog" aria-labelledby="ModalExcluirTitle" aria-hidden="true" style="border-radius: 10px;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="border-radius: 10px;">
+        <div class="modal-content" style="border-radius: 10px;">
+            <div class="modal-body">
+                <main role="main">
+                    <div>
+                        <center>
+                            <h1>Exclusão</h1>
+                            <h2>Exclusão de <I>@Model.Nome</I></h2>
+                            <h3>Você realmente deseja deletar este falecido? Esta ação não pode ser
+                                desfeita.
+                            </h3>
+                            <hr>
+                                <button type="submit" class="btn btn-danger" >Confirmar</button>
+                        </center>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>

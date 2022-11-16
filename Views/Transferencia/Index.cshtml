@@ -1,0 +1,192 @@
+@model Transferencia;
+
+@{
+    IEnumerable<Transferencia> transferencias = ViewBag.Tranferencias;
+    List<Administrador> administradores = ViewBag.AdministradoresList;
+}
+
+<center>
+    <div class="container controls min-vh ctcontainer">
+        <h1> Relatório de Tranferências</h1>
+        <br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+            style="justify-content: center; display: inline-block;">
+            Cadastrar Tranferência
+        </button>
+        <br>
+        <br>
+        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="border-radius: 10px;">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="border-radius: 10px;">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-body">
+                        <main role="main">
+                            <div>
+                                <center>
+                                    <h1>Cadastrar Nova Tranferência</h1>
+                                    <div>
+                                        <form method="POST" id="cadastrar">
+
+                                            <div class="controls">
+
+                                                <div class="col-lg-6">
+                                                    <label asp-for="@Model.IDJazigo1">Jazigo Atual:</label>
+                                                    <select class="form-select" asp-for="@Model.IDJazigo1"
+                                                        asp-items="@ViewBag.Jazigos" placeholder="Transferencia">
+                                                        <option value="">Selecione um Jazigo</option>
+                                                    </select>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label asp-for="@Model.IDJazigo2">Jazigo Novo:</label>
+                                                    <select class="form-select" asp-for="@Model.IDJazigo2"
+                                                        asp-items="@ViewBag.Jazigos" placeholder="Transferencia">
+                                                        <option value="">Selecione um Jazigo</option>
+                                                    </select>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label asp-for="@Model.IDAdm">Administrador:</label>
+                                                    <select class="form-select" asp-for="@Model.IDAdm"
+                                                        asp-items="@ViewBag.Administradores"
+                                                        placeholder="Transferencia">
+                                                        <option value="">Selecione um Administrador</option>
+                                                    </select>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Motivo">Motivo</label>
+                                                        <textarea id="form_message" class="form-control"
+                                                            placeholder="Insira sua mensagem" rows="4"
+                                                            required="required" data-error="Please, leave us a message."
+                                                            asp-for="@Model.Motivo"></textarea>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                                            <br><br>
+                                            <button id="adquirir" form="cadastrar" type="submit"
+                                                class="btn btn-primary frase">Salvar</button>
+                                        </form>
+                                    </div>
+                                </center>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Jazigo Antigo</th>
+                    <th scope="col">Jazigo Novo</th>
+                    <th scope="col">ID's sepultamento</th>
+                    <th scope="col">Nome do ADM</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (transferencias != null)
+                {
+
+                    var i = 0;
+
+                    @foreach (var transferencia in transferencias)
+                    {
+
+                        i++;
+
+                        var nomeselect = administradores.Find(r => r.IDAdministrador == transferencia.IDAdm);
+                        var nomeadm = nomeselect.Nome;
+
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@transferencia.IDJazigo1</td>
+                            <td>@transferencia.IDJazigo2</td>
+                            <td>@transferencia.IDS</td>
+                            <td>@nomeadm</td>
+                            <td>@transferencia.Motivo</td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" data-toggle="modal"
+                            data-target='@($"#b{transferencia.IDTransferencia}")'>Editar</button>
+                            </td>
+                            <div class="modal fade bd-example-modal-lg" id='@($"b{transferencia.IDTransferencia}")'
+                        tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+                        style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Editar</h1>
+                                                        <h2>Edição de <I>@transferencia.IDTransferencia</I></h2>
+                                                        <hr>
+                                                        <form method="POST" asp-action="Editar">
+
+                                                            <div class="controls">
+
+                                                                <div class="col-lg-6">
+                                                                    <label asp-for="@Model.IDJazigo1">Jazigo Atual:</label>
+                                                                    <select class="form-select" asp-for="@Model.IDJazigo1"
+                                                                asp-items="@ViewBag.Jazigos"
+                                                                placeholder="Transferencia">
+                                                                        <option value="">Selecione um Jazigo</option>
+                                                                    </select>
+                                                                    <div class="help-block with-errors"></div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label asp-for="@Model.IDJazigo2">Jazigo Novo:</label>
+                                                                    <select class="form-select" asp-for="@Model.IDJazigo2"
+                                                                asp-items="@ViewBag.Jazigos"
+                                                                placeholder="Transferencia">
+                                                                        <option value="">Selecione um Jazigo</option>
+                                                                    </select>
+                                                                    <div class="help-block with-errors"></div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label asp-for="@Model.IDAdm">Administrador:</label>
+                                                                    <select class="form-select" asp-for="@Model.IDAdm"
+                                                                asp-items="@ViewBag.Administradores"
+                                                                placeholder="Transferencia">
+                                                                        <option value="">Selecione um Administrador</option>
+                                                                    </select>
+                                                                    <div class="help-block with-errors"></div>
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Motivo">Motivo</label>
+                                                                        <textarea id="form_message" class="form-control"
+                                                                    placeholder="Insira sua mensagem" rows="4"
+                                                                    required="required"
+                                                                    data-error="Please, leave us a message."
+                                                                    asp-for="@Model.Motivo"></textarea>
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" asp-for="@transferencia.IDTransferencia">
+                                                            <button id="adquirir" type="submit"
+                                                        class="btn btn-primary frase">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</center>

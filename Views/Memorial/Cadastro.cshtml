@@ -1,0 +1,24 @@
+@model Memorial
+
+<h2>Cadastro de Memorial</h2>
+<hr>
+<form method="POST">
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-for="@Model.IDFalecido" asp-items="@ViewBag.SelectFalecidos" placeholder="Falecidos">
+            <option value="">Selecione um Falecido...</option>
+        </select>
+        <label asp-for="@Model.IDFalecido"></label>
+        <span asp-validation-for="@Model.IDFalecido"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea class="form-control" asp-for="@Model.Descricao" placeholder="Descrição"
+            style="height: 120px;">
+        </textarea>
+        <label asp-for="@Model.Descricao"></label>
+        <span asp-validation-for="@Model.Descricao"></span>
+    </div>
+    <p>
+        <a asp-controller="Memorial" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </p>
+</form>

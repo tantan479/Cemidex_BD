@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Cemidex">
+    <meta name="author" content="Renato Ribeiro Altoé">
+
+
+    <title>Cemidex</title>
+
+    <script src="https://kit.fontawesome.com/4cff10fb00.js" crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+    <link rel="shortcut icon" type="image/ico" href="~/img/icon.ico">
+    <link rel="stylesheet" href="~/css/estilo.css">
+    <link rel="stylesheet" href="~/css/card.css">
+    <link rel="script" href="~/js/carousel.js">
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" defer>
+
+</head>
+
+<body class="d-flex flex-column min-vh-100"> 
+
+    <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">Sobre</h4>
+                        <p class="text-muted">
+                            O Cemidex é um sistema web para o gerenciamento de um cemitério.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <ul class="list-unstyled">
+                            <br>
+                            <form class="form-inline my-2 my-lg-0">
+                                <li> <button class="btn btn-outline-warning my-2 my-sm-0 botaoDireita" role="button"><a asp-controller="Home" asp-action="Login" class="text-white botaoDireita">Login</a></button></li>
+                                <li><a asp-controller="Home" asp-action="Contato" class="text-white nomemorto">Contato</a></li>
+                                <li><a asp-controller="Home" asp-action="Sobre" class="text-white nomemorto">Saiba mais sobre</a></li>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand-centered d-flex align-items-center homepage">
+                    <strong><span style="color: #9FBAEB">Cem</span><span style="color:rgb(256, 256, 256);"><i
+                                class="fa-solid fa-dove"></i></span><span style="color: #8CCFAF">dex</span></strong>
+                </a>
+                <button class="navbar-toggler" type="button" style="right: 0;" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+   
+
+    <footer class="text-light bg-dark pt-3 pb-1 footer">
+        <div class="container footer">
+            <div class="row row-30">
+                <div class="col-md-3">
+                    <span style="color: #9FBAEB">Cem</span><span style="color:rgb(256, 256, 256);"><i
+                            class="fa-solid fa-dove"></i></span><span style="color: #8CCFAF">dex</span>
+                    <p>Nós somos um grupo que fornece serviços cemiteriais de alta qualidade e confiança</p>
+                </div>
+                <div class="col-md-5">
+                    <br>
+                </div>
+                <div class="col-md-4">
+                    <h4>Links Rápidos</h4>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list">
+                                <li class="list-item">
+                                    <p>Link 1</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Link 2</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Link 3</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Link 4</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul class="list">
+                                <li class="list-item">
+                                    <p>Link 1</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Link 2</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Link 3</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Link 4</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <p>Cemidex&reg; 2022 : : Todos os direitos reservados&copy;</p>
+        </div>
+    </footer>
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+        var $item = $('.carousel-item');
+        var $wHeight = $(window).height();
+        $item.eq(0).addClass('active');
+        $item.height($wHeight);
+        $item.addClass('full-screen');
+
+        $('.carousel img').each(function () {
+            var $src = $(this).attr('src');
+            var $color = $(this).attr('data-color');
+            $(this).parent().css({
+                'background-image': 'url(' + $src + ')',
+                'background-color': $color
+            });
+            $(this).remove();
+        });
+
+        $(window).on('resize', function () {
+            $wHeight = $(window).height();
+            $item.height($wHeight);
+        });
+
+        $('.carousel').carousel({
+            interval: 6000,
+            pause: "false"
+        });
+    </script>
+</body>
+
+</html>
