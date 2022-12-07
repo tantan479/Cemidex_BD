@@ -1,0 +1,31 @@
+.precosbasic{
+    background-color: #70C6FF!important;
+    border-top-right-radius: 0%!important;
+    border-top-left-radius: 0%!important;
+    border-bottom-right-radius: 0%!important;
+    border-bottom-left-radius: 0%!important;
+}
+
+.precosplus{
+    background-color: #8CCFAF!important;
+    border-top-right-radius: 0%!important;
+    border-top-left-radius: 0%!important;
+    border-bottom-right-radius: 0%!important;
+    border-bottom-left-radius: 0%!important;
+}
+
+.cifrao{
+    font-size: .46em;
+    vertical-align: super;
+}
+
+.pricing-head::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 11px;
+    background-color: rgba(37, 42, 45, 0.25);
+}
+

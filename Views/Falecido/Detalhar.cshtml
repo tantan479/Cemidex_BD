@@ -1,0 +1,46 @@
+@model Falecido;
+
+@{
+    var x = (Model.CaminhoImagem);
+}
+
+<div class="container">
+    <br>
+    <h2>Detalhes do falecido</h2>
+
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="@x" class="card-img" alt="...">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Nome</h5>
+                <p class="card-text">
+                    Nome da Mãe: @Model.NomeMae
+                </p>
+                <p class="card-text">
+                    Nome do Pai: @Model.NomePai
+                </p>
+                <p class="card-text">
+                    Estado Civil: @Model.EstadoCivil
+                </p>
+                <p class="card-text">
+                    Sexo: @Model.Sexo
+                </p>
+                <br>
+                <p class="card-text">
+                    <b> Data de Nascimento:</b> @Model.DataNascimento
+                </p>
+                <p class="card-text">
+                    <b> Data de Óbito:</b> @Model.DataObito
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@for (int i = 0; i < 3; i++)
+{
+    <br>
+}

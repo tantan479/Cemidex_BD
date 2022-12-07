@@ -1,0 +1,126 @@
+@{
+
+    List<Jazigo> jazigos = ViewBag.Jazigo;
+
+
+
+    List<Falecido> falecidos = ViewBag.Falecido;
+
+
+
+    List<Sepultamento> sepultamentos = ViewBag.Sepultamento;
+
+    List<int> ocupadas = new List<int>();
+
+
+    foreach (var falecidoscovados in falecidos)
+
+
+
+    {
+
+
+
+        var IDJazigo = sepultamentos.Find(s => s.IDFalecido == falecidoscovados.IDFalecido).IDJazigo;
+
+
+
+        if (!ocupadas.Contains(IDJazigo))
+
+
+
+        {
+
+
+
+            ocupadas.Add(IDJazigo);
+
+
+
+        }
+
+
+
+    }
+
+}
+
+
+<link rel="stylesheet" href="~/css/estilo2.css">
+
+<center>
+    <div class="container ctcontainer2">
+        <div>
+
+            <h1>Localização dos jazigos</h1>
+            <div class="ctcontainer3" style="color: white;">
+
+                @* <script>
+                    let ocupada;
+                    let k = 1;
+                    for (j = 0; j < 10; j++) {
+                    document.write("<div style='border: 2px; margin: 5px; display:flex;'>");
+                    for (i = 0; i < 10; i++) {
+                    //ocupada = Verifica_de_algum_Lugar(k);
+                    if(true){
+
+                    }else{
+
+                    }
+                    document.write("<div class='testevermelho' style='border: 2px solid black; margin: 5px; width: 20%;' ("
+                    + k + ")'>" +k+"</div>");
+                    //document.write("<div class='"+(ocupada?'verde':'cinza')+"' onclick='clicou("+k+")'>"+k+"</div>");
+                    k++;
+                    }
+                    document.write("</div>");
+                    }
+
+                    function clicou(id_cova) {
+                    alert("clicou na cova: " + id_cova);
+                    }
+                    </script> *@
+
+
+                @{
+                    var k = 1;
+                }
+
+                <ul class="showcase">
+                    <li>
+                        <div class="cova"></div>
+                        <small>Disponível</small>
+                    </li>
+                    <li>
+                        <div class="cova indis"></div>
+                        <small>Indisponível</small>
+                    </li>
+                </ul>
+
+                <div class="containerlocal">
+                    @foreach (var item in jazigos)
+                    {
+                        if (ocupadas.Contains(item.IDJazigo))
+
+                        {
+                            <div class='cova indis'>
+
+                                <a asp-controller="Jazigo" asp-action="Detalhes" asp-route-id="@item.IDJazigo" style="display: flow-root"> X </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class='cova'><a asp-controller="Jazigo" asp-action="Detalhes" asp-route-id="@item.IDJazigo" style="display: flow-root;"> @k </a></div>
+                        }
+                        k++;
+
+                    }
+                </div>
+
+
+            </div><br>
+
+        </div>
+    </div>
+</center>
+
+<link rel="script" href="~/js/locais.js">

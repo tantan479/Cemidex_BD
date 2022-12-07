@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+
+* {
+    box-sizing: border-box !important;
+}
+
+/* body {
+    background-color: #242333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: "Lato", sans-serif;
+    margin: 0;
+} */
+
+.area-container {
+    margin: 20px 0 !important;
+}
+
+.area-container select {
+    background-color: #fff !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+    font-size: 16px !important;
+    margin-left: 10px !important;
+    padding: 5px 15px 5px 15px !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+.containerlocal {
+    perspective: 1000px !important;
+    margin-bottom: 30px !important;
+}
+
+.cova {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #128f12!important;
+    height: 33px !important;
+    width: 30px !important;
+    margin: 5px !important;
+    font-size: 50px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+
+.cova.indis {
+    background-color: rgba(253, 86, 86, 0.842) !important;
+}
+
+
+.cova:not(.indis):hover {
+    cursor: pointer !important;
+    transform: scale(1.2) !important;
+}
+
+.showcase .cova:not(.indis):hover {
+    cursor: default !important;
+    transform: scale(1) !important;
+}
+
+.showcase {
+    background: rgba(0, 0, 0, 0.1) !important;
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+    color: #777 !important;
+    list-style-type: none !important;
+    display: flex !important;
+    flex-wrap: wrap;
+}
+
+.showcase li {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 10px !important;
+}
+
+.showcase li small {
+    margin-left: 2px !important;
+}
+
+.row {
+    display: flex !important;
+}
+
+p.text {
+    margin: 5px 0 !important;
+}
+
+p.text span {
+    color: rgb(158, 248, 158) !important;
+}
+
+.containerlocal {
+    display: flex !important;
+    align-content: stretch !important;
+    justify-content: space-evenly !important;
+    flex-wrap: wrap;
+}
+
+a{
+    font-size: initial;
+    color: #fff;
+}

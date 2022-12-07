@@ -1,0 +1,51 @@
+@model IEnumerable<Memorial>
+
+@{
+    Random rnd = new Random();
+}
+
+<center>
+    <div class="container ctcontainer">
+        <center>
+            <div class="row">
+                <div class="col-xl-8 offset-xl-2">
+                    <br>
+                    <h1>Memoriais</h1>
+                    <hr>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Memorial" asp-action="Cadastro" class="btn btn-primary btn-lg">Novo Memorial</a>
+                    }
+                  
+
+                    <main role="main">
+                        <div class="container">
+                            <div class="card-deck memorias">
+                                @foreach (var m in Model)
+                                {
+                                    int num = rnd.Next(1, 35);
+                                    var x = (m.IDFalecido).ToString("D6") + ".jpg";
+                                    <div class="card cardm">
+                                        <img src="~/img/falecido/@x" class="card-img-top">
+                                        <div class="card-body morto">
+                                            <h2 class="card-title">@m.Falecido.Nome</h2>
+                                            <p>
+                                                <a class="btn btn-primary pemorto" asp-controller="Memorial"
+                                                asp-action="Detalhes" asp-route-id="@m.IDFalecido" role="button">
+                                                    Detalhes
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="card-footer pemorto">
+                                            <small>Atualizado a @num minutos</small>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </center>
+    </div>
+</center>

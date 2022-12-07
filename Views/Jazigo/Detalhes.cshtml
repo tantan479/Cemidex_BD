@@ -1,0 +1,18 @@
+@model int;
+
+@{
+    List<Falecido> falecidos = ViewBag.Falecidos;
+}
+
+
+<div class="container">
+    <br>
+    <h2>Cova @Model</h2>
+    <h4>Localização: @ViewBag.Local</h4>
+    @foreach (var fal in falecidos)
+    {
+       <div>
+           <a asp-controller="Falecido" asp-action="Detalhar" asp-route-id="@fal.IDFalecido" style="display: flow-root"><h5>@fal.Nome</h5></a>
+       </div>
+    }
+</div>

@@ -1,0 +1,182 @@
+@model Localizacao;
+@{
+    IEnumerable<Localizacao> localizacoes = ViewBag.Localizacoes;
+}
+
+<center>
+
+    <div class="container controls min-vh ctcontainer">
+        <h1> Relatório de Localizações</h1><br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+            style="justify-content: center; display: inline-block;">
+            Cadastrar Local
+        </button>
+        <br>
+        <br>
+        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="border-radius: 10px;">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="border-radius: 10px;">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-body">
+                        <main role="main">
+                            <div>
+                                <center>
+                                    <h1>Cadastro de um Nova Localização</h1>
+                                    <div>
+                                        <form method="POST" id="cadastrar">
+                                            <div class="controls">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Nome"></label>
+                                                        <input class="form-control"
+                                                            placeholder="Insira o nome da Localização"
+                                                            required="required"
+                                                            data-error="Insira um nome de localização válido."
+                                                            asp-for="@Model.Nome">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Descricao">Descrição:</label>
+                                                        <input id="form_descricao" type="text" name="descricao"
+                                                            class="form-control" placeholder="Descrição"
+                                                            required="required"
+                                                            data-error="Insira a descrição da localização."
+                                                            asp-for="@Model.Descricao">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <a asp-controller="Localizacao" asp-action="Index"
+                                                    class="btn btn-secondary">Cancelar</a>
+                                                    <button id="adquirir" form="cadastrar" type="submit"
+                                                    class="btn btn-primary frase">Salvar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </center>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome do Local</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (localizacoes != null)
+                {
+                    @foreach (var localizacao in localizacoes)
+                    {
+                        <tr>
+                            <th scope="row">@localizacao.IDLocal</th>
+                            <td>@localizacao.Nome</td>
+                            <td>@localizacao.Descricao</td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" data-toggle="modal"
+                            data-target='@($"#b{localizacao.IDLocal}")'>Editar</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger" data-toggle="modal"
+                            data-target='@($"#a{localizacao.IDLocal}")'>Excluir</button>
+                            </td>
+                            <div class="modal fade bd-example-modal-lg" id='@($"b{localizacao.IDLocal}")' tabindex="-1"
+                        role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+                        style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Editar</h1>
+                                                        <h2>Edição de <I>@localizacao.Nome</I></h2>
+                                                        <hr>
+                                                        <form method="POST" asp-action="Editar">
+                                                            <div class="controls">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Nome"></label>
+                                                                        <span asp-validation-for="@Model.Nome"></span>
+                                                                        <input class="form-control" value="@localizacao.Nome"
+                                                                    placeholder="Insira o nome da localização"
+                                                                    required="required"
+                                                                    data-error="Insira um nome de local válido."
+                                                                    asp-for="@localizacao.Nome">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Descricao"></label>
+                                                                        <span asp-validation-for="@Model.Descricao"></span>
+                                                                        <input class="form-control" value="@localizacao.Descricao"
+                                                                    placeholder="Insira o a descrição"
+                                                                    required="required"
+                                                                    data-error="Insira uma descrição válida."
+                                                                    asp-for="@localizacao.Descricao">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <a asp-controller="Localizacao" asp-action="Index"
+                                                            class="btn btn-secondary">Cancelar</a>
+
+                                                                <br><br>
+                                                            </div>
+                                                            <input type="hidden" asp-for="@localizacao.IDLocal">
+                                                            <button id="adquirir" type="submit"
+                                                        class="btn btn-primary frase">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade bd-example-modal-lg" id='@($"a{localizacao.IDLocal}")' tabindex="-1"
+                        role="dialog" aria-labelledby="ModalExcluirTitle" aria-hidden="true"
+                        style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Exclusão</h1>
+                                                        <h2>Exclusão de <I>@localizacao.Nome</I></h2>
+                                                        <h3>Você realmente deseja deletar este Local? Esta ação não pode ser
+                                                            desfeita.
+                                                        </h3>
+                                                        <p>@localizacao.Descricao</p>
+                                                        <hr>
+                                                        <form asp-action="Deletar" method="POST">
+                                                            <input type="hidden" asp-for="@localizacao.IDLocal">
+                                                            <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</center>

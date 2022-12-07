@@ -1,0 +1,274 @@
+@model Requerente;
+@using Microsoft.AspNetCore.Mvc;
+@using Cemidex_BD.Data;
+@using Cemidex_BD.Models;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+
+@{
+    IEnumerable<Requerente> requerentes = ViewBag.Requerentes;
+}
+
+<center>
+    <div class="container controls min-vh ctcontainer">
+        <h1> Relatório de Requerentes</h1>
+        <br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+            style="justify-content: center; display: inline-block;">
+            Cadastrar Requerente
+        </button>
+        <br>
+        <br>
+        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="border-radius: 10px;">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="border-radius: 10px;">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-body">
+                        <main role="main">
+                            <div>
+                                <center>
+                                    <h1>Cadastrar Novo Requerente</h1>
+                                    <div>
+                                        <form method="POST" id="cadastrar">
+                                            <div class="controls">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Nome"></label>
+                                                        <input class="form-control" placeholder="Insira o nome"
+                                                            required="required" data-error="Insira um nome válido."
+                                                            asp-for="@Model.Nome">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.CPF"></label>
+                                                        <input class="form-control" placeholder="Insira um CPF"
+                                                            required="required" data-error="Insira um CPF válido."
+                                                            asp-for="@Model.CPF">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Telefone"></label>
+                                                        <input class="form-control"
+                                                            placeholder="Insira o número de telefone"
+                                                            required="required" data-error="Insira um telefone válido."
+                                                            asp-for="@Model.Telefone">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Email"></label>
+                                                        <input type="email" class="form-control"
+                                                            placeholder="Insira seu email" required="required"
+                                                            data-error="Insira um email válido." asp-for="@Model.Email">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Endereco">Endereço</label>
+                                                        <textarea id="form_message" class="form-control"
+                                                            placeholder="Insira sua mensagem" rows="4"
+                                                            required="required" data-error="Please, leave us a message."
+                                                            asp-for="@Model.Endereco"></textarea>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.IdPlano">Plano:</label>
+                                                        <select class="form-select"asp-for="@Model.IdPlano"
+                                                            asp-items="@ViewBag.SelectPlanos" placeholder="Plano">
+                                                            <option value="">Selecione um Plano...</option>
+                                                        </select>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <button id="adquirir" form="cadastrar" type="submit"
+                                                        class="btn btn-primary frase">Salvar</button>
+                                                <a asp-controller="Requerente" asp-action="Index"
+                                                    class="btn btn-secondary">Cancelar</a>
+                                                <br><br>
+                                            </div>
+    
+                                        </form>
+                                    </div>
+                                </center>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Plano Escolhido</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (requerentes != null)
+                {
+
+                    var i=0;
+
+                    @foreach (var requerente in requerentes)
+                    {
+
+                        i++;
+
+                        var plano = ViewBag.Planos;
+                        var planocerto = plano[@requerente.IdPlano-1];
+                        var planonome = planocerto.Nome;
+
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@requerente.Nome</td>
+                            <td>@requerente.CPF</td>
+                            <td>@planonome</td> @*new SelectList(paises, "Id", "Nome", idPaisSelecionado) *@
+                            <td>@requerente.Telefone</td>
+                            <td>@requerente.Endereco</td>
+                            <td>@requerente.Email</td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" data-toggle="modal"
+                            data-target='@($"#b{requerente.IdRequerente}")'>Editar</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger" data-toggle="modal"
+                            data-target='@($"#a{requerente.IdRequerente}")'>Excluir</button>
+                            </td>
+                            <div class="modal fade bd-example-modal-lg" id='@($"b{requerente.IdRequerente}")' tabindex="-1"
+                        role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+                        style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Editar</h1>
+                                                        <h2>Edição de <I>@requerente.Nome</I></h2>
+                                                        <hr>
+                                                        <form method="POST" asp-action="Editar">
+                                                            <div class="controls">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Nome"></label>
+                                                                        <span asp-validation-for="@Model.Nome"></span>
+                                                                        <input class="form-control" value="@requerente.Nome"
+                                                                    placeholder="Insira o nome" required="required"
+                                                                    data-error="Insira um nome válido."
+                                                                    asp-for="@requerente.Nome">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.CPF"></label>
+                                                                        <span asp-validation-for="@Model.CPF"></span>
+                                                                        <input class="form-control" value="@requerente.CPF"
+                                                                    placeholder="Insira o CPF" required="required"
+                                                                    data-error="Insira um CPF válido."
+                                                                    asp-for="@requerente.CPF">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Email"></label>
+                                                                        <span asp-validation-for="@Model.Email"></span>
+                                                                        <input class="form-control" value="@requerente.Email"
+                                                                    placeholder="Insira o email" required="required"
+                                                                    data-error="Insira um email válido." type="email"
+                                                                    asp-for="@requerente.Email">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.CPF"></label>
+                                                                        <span asp-validation-for="@Model.CPF"></span>
+                                                                        <input class="form-control" value="@requerente.CPF"
+                                                                    placeholder="Insira o CPF" required="required"
+                                                                    data-error="Insira um CPF válido."
+                                                                    asp-for="@requerente.CPF">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Endereco"></label>
+                                                                        <span asp-validation-for="@Model.Endereco"></span>
+                                                                        <textarea class="form-control"
+                                                                    value="@requerente.Endereco"
+                                                                    placeholder="Insira o Endereço" required="required"
+                                                                    data-error="Insira um endereço válido."
+                                                                    asp-for="@requerente.CPF"></textarea>
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <a asp-controller="Requerente" asp-action="Index"
+                                                                class="btn btn-secondary">Cancelar</a>
+
+                                                                <br><br>
+                                                            </div>
+                                                            <input type="hidden" asp-for="@requerente.IdRequerente">
+                                                            <button id="adquirir" type="submit"
+                                                        class="btn btn-primary frase">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade bd-example-modal-lg" id='@($"a{requerente.IdRequerente}")' tabindex="-1"
+                        role="dialog" aria-labelledby="ModalExcluirTitle" aria-hidden="true"
+                        style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Exclusão</h1>
+                                                        <h2>Exclusão de <I>@requerente.Nome</I></h2>
+                                                        <h3>Você realmente deseja deletar este Local? Esta ação não pode ser
+                                                            desfeita.
+                                                        </h3>
+                                                        <p>@requerente.CPF</p>
+                                                        <hr>
+                                                        <form asp-action="Deletar" method="POST">
+                                                            <input type="hidden" asp-for="@requerente.IdRequerente">
+                                                            <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</center>

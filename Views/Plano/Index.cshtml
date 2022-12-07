@@ -1,0 +1,202 @@
+@model PlanoFunebre;
+@{
+    IEnumerable<PlanoFunebre> planosFunebres = ViewBag.PlanosFunebres;
+}
+
+<center>
+
+    <div class="container controls min-vh ctcontainer">
+        <h1> Relatório de Planos</h1>
+        <br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+            style="justify-content: center; display: inline-block;">
+            Cadastrar Plano
+        </button>
+        <br>
+        <br>
+        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="border-radius: 10px;">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="border-radius: 10px;">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-body">
+                        <main role="main">
+                            <div>
+                                <center>
+                                    <h1>Cadastro de um Novo Plano</h1>
+                                    <div>
+                                        <form method="POST" id="cadastrar">
+                                            <div class="controls">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Nome"></label>
+                                                        <input class="form-control" placeholder="Insira o nome do plano"
+                                                            required="required"
+                                                            data-error="Insira um nome do plano válido."
+                                                            asp-for="@Model.Nome">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Descricao">Descrição:</label>
+                                                        <input id="form_descricao" type="text" name="descricao"
+                                                            class="form-control" placeholder="Descrição"
+                                                            required="required"
+                                                            data-error="Insira a descrição do plano."
+                                                            asp-for="@Model.Descricao">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.Preco">Mensalidade:</label>
+                                                        <input id="form_mensalidade" type="number" min="1" step="any"
+                                                            name="Preco" class="form-control" placeholder="Mensalidade"
+                                                            data-error="Insira a mensalidade" required="required"
+                                                            asp-for="@Model.Preco">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+                                                <a asp-controller="Plano" asp-action="Index"
+                                                    class="btn btn-secondary">Cancelar</a>
+                                                <button id="adquirir" form="cadastrar" type="submit"
+                                                    class="btn btn-primary frase">Salvar</button>
+                                                <br><br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </center>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome do Plano</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Mensalidade</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (planosFunebres != null)
+                {
+                    @foreach (var plano in planosFunebres)
+                    {
+                        <tr>
+                            <th scope="row">@plano.IDPlano</th>
+                            <td>@plano.Nome</td>
+                            <td>@plano.Descricao</td>
+                            <td>@plano.Preco</td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" data-toggle="modal"
+                            data-target='@($"#b{plano.IDPlano}")'>Editar</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger" data-toggle="modal"
+                            data-target='@($"#a{plano.IDPlano}")'>Excluir</button>
+                            </td>
+                            <div class="modal fade bd-example-modal-lg" id='@($"b{plano.IDPlano}")' tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Editar</h1>
+                                                        <h2>Edição de <I>@plano.Nome</I></h2>
+                                                        <hr>
+                                                        <form method="POST" asp-action="Editar">
+                                                            <div class="controls">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Nome"></label>
+                                                                        <span asp-validation-for="@Model.Nome"></span>
+                                                                        <input class="form-control" value="@plano.Nome"
+                                                                    placeholder="Insira o nome do plano"
+                                                                    required="required"
+                                                                    data-error="Insira um nome do plano válido."
+                                                                    asp-for="@plano.Nome">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Descricao">Descrição:</label>
+                                                                        <span asp-validation-for="@Model.Descricao"></span>
+                                                                        <input id="form_descricao" type="text"
+                                                                    value="@plano.Descricao" class="form-control"
+                                                                    placeholder="Descrição" required="required"
+                                                                    data-error="Insira a descrição do plano."
+                                                                    asp-for="@plano.Descricao">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label asp-for="@Model.Preco">Mensalidade:</label>
+                                                                        <span asp-validation-for="@Model.Preco"></span>
+                                                                        <input id="form_mensalidade" type="number" min="1"
+                                                                    value="@plano.Preco" step="any" class="form-control"
+                                                                    placeholder="Mensalidade"
+                                                                    data-error="Insira a mensalidade"
+                                                                    required="required" asp-for="@plano.Preco">
+                                                                        <div class="help-block with-errors"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <a asp-controller="Plano" asp-action="Index"
+                                                            class="btn btn-secondary">Cancelar</a>
+
+                                                                <br><br>
+                                                            </div>
+                                                            <input type="hidden" asp-for="@plano.IDPlano">
+                                                            <button id="adquirir" type="submit"
+                                                        class="btn btn-primary frase">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade bd-example-modal-lg" id='@($"a{plano.IDPlano}")' tabindex="-1" role="dialog"
+                        aria-labelledby="ModalExcluirTitle" aria-hidden="true" style="border-radius: 10px;">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                            style="border-radius: 10px;">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-body">
+                                            <main role="main">
+                                                <div>
+                                                    <center>
+                                                        <h1>Exclusão</h1>
+                                                        <h2>Exclusão de <I>@plano.Nome</I></h2>
+                                                        <h3>Você realmente deseja deletar este Plano? Esta ação não pode ser
+                                                            desfeita.
+                                                        </h3>
+                                                        <p>@plano.Descricao</p>
+                                                        <hr>
+                                                        <form asp-action="Deletar" method="POST">
+                                                            <input type="hidden" asp-for="@plano.IDPlano">
+                                                            <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                        </form>
+                                                    </center>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</center>

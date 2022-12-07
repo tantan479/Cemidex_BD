@@ -1,0 +1,83 @@
+@model LoginViewModel
+@{
+    Layout = null;
+}
+
+
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Cemidex">
+    <meta name="author" content="Rodrigo Lopes Neves">
+
+
+    <title>Cemidex</title>
+
+    <script src="https://kit.fontawesome.com/4cff10fb00.js" crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+    <link rel="shortcut icon" type="image/ico" href="~/img/icon.ico">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/floating-labels/">
+    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="~/css/estiloLogin.css" rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="~/css/estilo.css" rel="stylesheet">
+
+    <style>
+        #letra{
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+
+    <main role="main">
+        <form class="form" method="post">
+            <div class="text-center mb-4">
+                <img class="mb-4" src="~/img/icon.ico" alt="" width="72" height="72">
+                <h1 class="h3 mb-3 font-weight-normal">Tela de Login</h1>
+                <p>Insira seu email ou usuário para fazer login no sistema</p>
+            </div>
+
+            <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="@Model.Email" placeholder=" ">
+                        <label asp-for="@Model.Email"></label>
+                        <span class="small text-danger ps-2" asp-validation-for="@Model.Email"></span>
+                                </div>
+                    <div class="form-floating">
+                        <input class="form-control" asp-for="@Model.Senha" placeholder=" ">
+                        <label asp-for="@Model.Senha"></label>
+                        <span class="small text-danger ps-2" asp-validation-for="@Model.Senha"></span>
+                                </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" asp-for="@Model.Lembrar">
+                        <label class="form-check-label" asp-for="@Model.Lembrar"></label>
+                    </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Fazer Login</button>
+            <p class="mt-5 mb-3 text-muted text-center">&copy; 2022</p>
+        </form>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
